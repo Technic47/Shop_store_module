@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  consumer:
+    build:
+      context: .
+    container_name: Shop_store_module
+    restart: always
+    ports:
+      - "8090:8090"
+    environment:
+      DB_URL: jdbc:postgresql://host.docker.internal:5432/shop
+      KAFKA_URL: host.docker.internal:9092
+      STORE_GROUP_ID: shop_store
+#    deploy:
+#      mode: replicated
+#      replicas: 2
+    networks:
+      kafka-network:
+
+networks:
+  kafka-network:
+
