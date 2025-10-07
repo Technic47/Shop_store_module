@@ -14,5 +14,5 @@ WORKDIR /app
 
 COPY --from=builder /app/target/Shop_store_module.jar /app/app.jar
 
-EXPOSE 8081
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
