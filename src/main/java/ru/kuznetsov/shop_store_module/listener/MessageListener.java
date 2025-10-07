@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,12 +11,13 @@ import org.springframework.stereotype.Component;
 public class MessageListener {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
-    public final static String MESSAGE_TOPIC_NAME = "message";
+    public final static String ADD_PRODUCT_TOPIC_NAME = "shop_add_product";
 
     Logger logger = LoggerFactory.getLogger(MessageListener.class);
 
-    @KafkaListener(topics = MESSAGE_TOPIC_NAME, groupId = "${spring.kafka.consumer.group-id}")
-    public void listenGroupFoo(String message) {
-
-    }
+//    @KafkaListener(topics = ADD_PRODUCT_TOPIC_NAME, groupId = "${spring.kafka.consumer.group-id}")
+//    @SendTo()
+//    public Reply listenGroupFoo(String message) {
+//
+//    }
 }
