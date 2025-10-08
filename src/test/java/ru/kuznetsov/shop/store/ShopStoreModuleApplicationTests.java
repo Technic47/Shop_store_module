@@ -1,4 +1,4 @@
-package ru.kuznetsov.shop_store_module;
+package ru.kuznetsov.shop.store;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

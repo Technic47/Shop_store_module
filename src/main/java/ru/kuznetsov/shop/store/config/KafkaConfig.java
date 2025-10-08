@@ -1,4 +1,4 @@
-package ru.kuznetsov.shop_store_module.config;
+package ru.kuznetsov.shop.store.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;

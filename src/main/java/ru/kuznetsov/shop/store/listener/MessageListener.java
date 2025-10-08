@@ -1,4 +1,4 @@
-package ru.kuznetsov.shop_store_module.listener;
+package ru.kuznetsov.shop.store.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MessageListener {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
     public final static String ADD_PRODUCT_TOPIC_NAME = "shop_add_product";
 
     Logger logger = LoggerFactory.getLogger(MessageListener.class);
