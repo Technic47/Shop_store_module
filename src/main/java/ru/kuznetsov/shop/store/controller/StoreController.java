@@ -47,4 +47,14 @@ public class StoreController {
     public ResponseEntity<List<StockDto>> getAllStockByStoreId(@PathVariable Long id) {
         return ResponseEntity.ok(stockService.findAllByStoreId(id));
     }
+
+    @PostMapping
+    public ResponseEntity<StoreDto> createStore(@RequestBody StoreDto storeDto) {
+        return ResponseEntity.ok(storeService.add(storeDto));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteeStore(@PathVariable Long id) {
+        storeService.deleteById(id);
+    }
 }
