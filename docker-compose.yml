@@ -1,27 +1,18 @@
-version: '3.1'
+version: '3.8'
 
 services:
-  shop_store_module:
+  store_module:
+    env_file:
+      - "../.env"
     build:
       context: .
-    container_name: shop_store_module
+    container_name: store_module
     restart: always
     ports:
-      - "8080:8080"
+      - "9083:8080"
     environment:
-      DB_URL: jdbc:postgresql://host.docker.internal:5432/shop
-      DB_USER: postgres
-      DB_PASS: 1999
-      KAFKA_URL: host.docker.internal:9092
-      STORE_GROUP_ID: shop_store
-      REDIS_HOST: host.docker.internal
-      REDIS_PORT: 6379
+      MODULE_GROUP_ID: STORE_GROUP_ID
 #    deploy:
 #      mode: replicated
 #      replicas: 2
-    networks:
-      kafka-network:
-
-networks:
-  kafka-network:
 

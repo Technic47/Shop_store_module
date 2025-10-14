@@ -12,7 +12,6 @@ RUN ./mvnw clean package spring-boot:repackage
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-COPY --from=builder /app/target/Shop_store_module.jar /app/app.jar
+COPY --from=builder /app/target/Store_module.jar /app/app.jar
 
-EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
