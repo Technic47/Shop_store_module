@@ -3,10 +3,10 @@ package ru.kuznetsov.shop.store.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kuznetsov.shop.data.dto.StockDto;
-import ru.kuznetsov.shop.data.dto.StoreDto;
 import ru.kuznetsov.shop.data.service.StockService;
 import ru.kuznetsov.shop.data.service.StoreService;
+import ru.kuznetsov.shop.represent.dto.StockDto;
+import ru.kuznetsov.shop.represent.dto.StoreDto;
 
 import java.util.ArrayList;
 import java.util.List;
