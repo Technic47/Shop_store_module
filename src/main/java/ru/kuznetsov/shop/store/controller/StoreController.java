@@ -5,10 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kuznetsov.shop.data.service.StockService;
 import ru.kuznetsov.shop.data.service.StoreService;
+import ru.kuznetsov.shop.represent.dto.AddressDto;
 import ru.kuznetsov.shop.represent.dto.StockDto;
 import ru.kuznetsov.shop.represent.dto.StoreDto;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -51,6 +53,13 @@ public class StoreController {
     @PostMapping
     public ResponseEntity<StoreDto> createStore(@RequestBody StoreDto storeDto) {
         return ResponseEntity.ok(storeService.add(storeDto));
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<List<StoreDto>> createBatch(@RequestBody Collection<StoreDto> dtoCollection) {
+        return ResponseEntity.ok(dtoCollection.stream()
+                .map(storeService::add)
+                .toList());
     }
 
     @DeleteMapping("/{id}")
