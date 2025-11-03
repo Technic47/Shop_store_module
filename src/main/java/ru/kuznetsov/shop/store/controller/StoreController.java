@@ -8,9 +8,9 @@ import ru.kuznetsov.shop.data.service.StoreService;
 import ru.kuznetsov.shop.represent.dto.StockDto;
 import ru.kuznetsov.shop.represent.dto.StoreDto;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/store")
@@ -32,32 +32,22 @@ public class StoreController {
             @RequestParam(required = false) Long addressId,
             @RequestParam(required = false) String ownerId
     ) {
-        List<StoreDto> storeList = new ArrayList<>();
+        UUID uuid = null;
 
-        boolean filtered = false;
-
-        if (id != null) {
-            filtered = true;
-            storeList.add(storeService.findById(id));
-        }
-        if (name != null) {
-            filtered = true;
-            storeList.add(storeService.findByName(name));
-        }
-        if (addressId != null) {
-            filtered = true;
-            storeList.addAll(storeService.findByAddressId(addressId));
+        if (ownerId != null) {
+            try {
+                uuid = UUID.fromString(ownerId);
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().build();
+            }
         }
 
-        if (!filtered) storeList.addAll(storeService.findAll());
-
-        if (ownerId != null && !ownerId.isEmpty()) {
-            storeList = storeList.stream()
-                    .filter(store -> store.getOwnerId().equals(ownerId))
-                    .toList();
-        }
-
-        return ResponseEntity.ok(storeList);
+        return ResponseEntity.ok(storeService.findAllByOptionalParams(
+                id,
+                name,
+                addressId,
+                uuid
+        ));
     }
 
     @GetMapping("/{id}/stock")
