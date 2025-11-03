@@ -11,7 +11,6 @@ import ru.kuznetsov.shop.represent.dto.StoreDto;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/store")
@@ -49,12 +48,14 @@ public class StoreController {
             filtered = true;
             storeList.addAll(storeService.findByAddressId(addressId));
         }
-        if (ownerId != null) {
-            filtered = true;
-            storeList.addAll(storeService.findAllByOwnerId(UUID.fromString(ownerId)));
-        }
 
         if (!filtered) storeList.addAll(storeService.findAll());
+
+        if (ownerId != null && !ownerId.isEmpty()) {
+            storeList = storeList.stream()
+                    .filter(store -> store.getOwnerId().equals(ownerId))
+                    .toList();
+        }
 
         return ResponseEntity.ok(storeList);
     }
