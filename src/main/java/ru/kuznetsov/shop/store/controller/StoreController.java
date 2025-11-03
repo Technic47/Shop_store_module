@@ -5,13 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kuznetsov.shop.data.service.StockService;
 import ru.kuznetsov.shop.data.service.StoreService;
-import ru.kuznetsov.shop.represent.dto.AddressDto;
 import ru.kuznetsov.shop.represent.dto.StockDto;
 import ru.kuznetsov.shop.represent.dto.StoreDto;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/store")
@@ -30,17 +30,31 @@ public class StoreController {
     public ResponseEntity<List<StoreDto>> getAllStores(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Long addressId
+            @RequestParam(required = false) Long addressId,
+            @RequestParam(required = false) String ownerId
     ) {
         List<StoreDto> storeList = new ArrayList<>();
 
+        boolean filtered = false;
+
         if (id != null) {
+            filtered = true;
             storeList.add(storeService.findById(id));
-        } else if (name != null) {
+        }
+        if (name != null) {
+            filtered = true;
             storeList.add(storeService.findByName(name));
-        } else if (addressId != null) {
+        }
+        if (addressId != null) {
+            filtered = true;
             storeList.addAll(storeService.findByAddressId(addressId));
-        } else storeList.addAll(storeService.findAll());
+        }
+        if (ownerId != null) {
+            filtered = true;
+            storeList.addAll(storeService.findAllByOwnerId(UUID.fromString(ownerId)));
+        }
+
+        if (!filtered) storeList.addAll(storeService.findAll());
 
         return ResponseEntity.ok(storeList);
     }
