@@ -50,11 +50,6 @@ public class StoreController {
         ));
     }
 
-    @GetMapping("/{id}/stock")
-    public ResponseEntity<List<StockDto>> getAllStockByStoreId(@PathVariable Long id) {
-        return ResponseEntity.ok(stockService.findAllByStoreId(id));
-    }
-
     @PostMapping
     public ResponseEntity<StoreDto> createStore(@RequestBody StoreDto storeDto) {
         return ResponseEntity.ok(storeService.add(storeDto));
