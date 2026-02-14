@@ -59,8 +59,13 @@ public class StoreController {
                 .toList());
     }
 
+    @PutMapping
+    public ResponseEntity<StoreDto> updateStore(@RequestBody StoreDto storeDto) {
+        return ResponseEntity.ok(storeService.update(storeDto));
+    }
+
     @DeleteMapping("/{id}")
-    public void deleteeStore(@PathVariable Long id) {
+    public void deleteStore(@PathVariable Long id) {
         storeService.deleteById(id);
     }
 }
