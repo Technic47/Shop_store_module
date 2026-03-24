@@ -5,21 +5,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kuznetsov.shop.data.service.StoreService;
 import ru.kuznetsov.shop.represent.dto.StoreDto;
+import ru.kuznetsov.shop.store.api.StoreControllerApi;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+
 @RestController
 @RequestMapping("/store")
 @RequiredArgsConstructor
-public class StoreController {
+public class StoreController implements StoreControllerApi {
 
     private final StoreService storeService;
 
     @GetMapping("/{id}")
     public ResponseEntity<StoreDto> getStoreById(@PathVariable Long id) {
-        return ResponseEntity.ok(storeService.findById(id));
+        StoreDto byId = storeService.findById(id);
+        return byId == null ?
+                ResponseEntity.status(NO_CONTENT).build()
+                : ResponseEntity.ok(byId);
     }
 
     @GetMapping()
@@ -39,12 +45,16 @@ public class StoreController {
             }
         }
 
-        return ResponseEntity.ok(storeService.findAllByOptionalParams(
+        List<StoreDto> allByOptionalParams = storeService.findAllByOptionalParams(
                 id,
                 name,
                 addressId,
                 uuid
-        ));
+        );
+
+        return allByOptionalParams.isEmpty() ?
+                ResponseEntity.status(NO_CONTENT).build()
+                : ResponseEntity.ok(allByOptionalParams);
     }
 
     @PostMapping
